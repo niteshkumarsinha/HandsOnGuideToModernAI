@@ -1,3 +1,5 @@
+# Zero shot prompting 
+
 from dotenv import load_dotenv
 from openai import OpenAI
 import os
@@ -10,20 +12,14 @@ client = OpenAI(
     base_url="https://generativelanguage.googleapis.com/v1beta"
 )
 
-response = client.chat.completions.create(
-    model="gemini-2.5-flash",
-    messages=[
-        {"role": "user", "content": "Hey There!, Nice to meet you!"}
-    ]
-)
-
-print(response.choices[0].message.content)
+# Zero shot prompting : Directly instructing the model to perform a task without any prior examples.
+SYSTEM__PROMPT = "You are an expert in Coding and only and only answer coding related questions. If user asks anything other than coding related questions, politely refuse to answer."
 
 
 response = client.chat.completions.create(
     model="gemini-2.5-flash",
     messages=[
-        {"role": "system", "content": "You are an expert in Maths and only and only answer Maths related questions."},
+        {"role": "system", "content": SYSTEM__PROMPT},
         {"role": "user", "content": "Can you code a python program to add two numbers?"}
     ]
 )
