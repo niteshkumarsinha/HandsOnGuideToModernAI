@@ -32,7 +32,6 @@ async def chat(request: ChatRequest):
         ]
 
     )
-
     return {"response": response.message.content}
         
 
