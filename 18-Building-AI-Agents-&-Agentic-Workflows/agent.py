@@ -1,6 +1,10 @@
 from openai import OpenAI
 from dotenv import load_dotenv
 import os
+import requests
+from pydantic import BaseModel, Field
+from typing import Optional
+
 
 load_dotenv()
 
@@ -19,8 +23,17 @@ tools = {
     "get_weather": get_weather
 }
 
+class MyOutputFormat(BaseModel):
+    step: str = Field(..., description="The id of the step. Example: PLAN, OBSERVE, TOOL, OUTPUT, etc")
+    content: Optional[str] = Field(None, description="The optional string content for the step.")
+    tool: Optional[str] = Field(None, description="The tool to use.")
+    input: Optional[str] = Field(None, description="The input params for the tool")
+
 SYSTEM_PROMPT = """
 You are a helpful assistant that can use tools to resolve user queries using chain of thought.
+Output JSON format:
+{"step": "PLAN/OBSERVE/OUTPUT", "content": "Your content here.", "tool": "The tool to use.", "input": "The input params for the tool"}    
+
 Available tools:
 - get_weather(city): Returns the weather in the given city.
 
@@ -46,12 +59,13 @@ def run_agent(query):
         api_key=os.getenv("GEMINI_API_KEY"),
         base_url="https://generativelanguage.googleapis.com/v1beta"
     )   
-    chat = client.chat.completions.create(
+    chat = client.chat.completions.parse(
         model=MODEL_ID,
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": query}
-        ]
+        ],
+        response_format=MyOutputFormat
     )
     
     # Send system prompt and query combined
