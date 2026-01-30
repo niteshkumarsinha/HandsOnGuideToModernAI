@@ -16,6 +16,9 @@ An enterprise-grade RAG architecture using FastAPI for the API layer and Redis/R
 ### [21. Multi-Modal Agents](./21-Multi-Modal-Agents/)
 Exploring complex agent structures with LangGraph, including conditional edges and persistent state using MongoDB.
 
+### [26. Memory Layer Building (Short, Long, & Semantic Memory)](./26-Memory-Layer-Building-Short-Long-And-Semantic-Memory-In-AI/)
+Implementation of an advanced memory layer using Mem0, featuring persistent chat history and context-aware retrieval.
+
 ## Setup
 
 1. **Clone the repository**:
