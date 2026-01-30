@@ -1,0 +1,15 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: langgraph_mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: langgraph_user
+      MONGO_INITDB_ROOT_PASSWORD: langgraph_password
+
+volumes:
+  mongo_data:
