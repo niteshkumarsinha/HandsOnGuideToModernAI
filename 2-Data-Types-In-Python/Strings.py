@@ -38,7 +38,3 @@ print(label_text.encode("utf-8"))
 encoded_label = label_text.encode("utf-8")
 decoded_label = encoded_label.decode("utf-8")
 print(decoded_label)
-
-
-
-
